@@ -1,0 +1,11 @@
+[global]
+floatX=float32
+device=cuda
+
+[nvcc]
+compiler_bindir=C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin
+
+[dnn]
+enabled=True
+include_path=C:\CUDA\v8.0\include
+library_path=C:\CUDA\v8.0\lib\x64
