@@ -73,10 +73,6 @@ cur_params = np.zeros((num_params,), dtype=np.float32)
 cur_notes = np.zeros((num_measures, note_h, note_w), dtype=np.uint8)
 cur_controls = np.array(control_inits, dtype=np.float32)
 
-#Load the piano sample
-piano_sample = np.fromfile('PianoNote.bin', dtype=np.float32)
-piano_sample /= np.amax(piano_sample)
-
 #Setup audio stream
 audio = pyaudio.PyAudio()
 audio_notes = []
@@ -133,9 +129,6 @@ def audio_callback(in_data, frame_count, time_info, status):
 			w = 2*np.abs(np.mod(x * f - 0.5, 2) - 1) - 1 #Triangle
 		elif instrument == 3:
 			w = np.sin(x * f * math.pi)                  #Sine
-		else:
-			s_ix = np.minimum(x * f * 62, piano_sample.shape[0] - 1).astype(np.int64)
-			w = piano_sample[s_ix]
 		
 		#w = np.floor(w*8)/8
 		w[x == 0] = 0
@@ -179,7 +172,6 @@ from keras.layers.advanced_activations import ELU
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import plot_model
 from keras import backend as K
-from custom_layers import PartiallyConnected
 K.set_image_data_format('channels_first')
 
 print "Loading Encoder..."
@@ -398,8 +390,6 @@ while running:
 				instrument = 2
 			if event.key == pygame.K_4:
 				instrument = 3
-			if event.key == pygame.K_5:
-				instrument = 4
 			if event.key == pygame.K_c:
 				y = np.expand_dims(np.where(cur_notes > note_thresh, 1, 0), 0)
 				x = enc_model.predict(y)[0]
