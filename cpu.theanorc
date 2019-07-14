@@ -1,3 +1,0 @@
-[global]
-floatX=float32
-device=cpu

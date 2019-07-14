@@ -1,0 +1,13 @@
+matplotlib==3.0.2
+pygame==1.9.6
+pyaudio==0.2.11
+
+pydot==1.4.1
+keras==2.2.4
+tensorflow==1.14.0
+pyaudio==0.2.11
+numpy==1.16.4
+
+mido==1.2.9
+
+argparse==1.4.0
